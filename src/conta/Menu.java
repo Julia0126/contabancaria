@@ -16,9 +16,9 @@ public class Menu {
 
 		Scanner leia = new Scanner(System.in);
 
-		int opcao, numero, agencia, tipo, aniversario;
+		int opcao, numero, agencia, tipo, aniversario, numeroDestino;
 		String titular;
-		float saldo, limite;
+		float saldo, limite, valor;
 
 		System.out.println("\nCriar contas\n");
 
@@ -139,7 +139,7 @@ public class Menu {
 
 					System.out.println("Digite o número da agência:");
 					agencia = leia.nextInt();
-					
+
 					System.out.println("Digite o nome do titular:");
 					leia.skip("\\R?");
 					titular = leia.nextLine();
@@ -172,25 +172,60 @@ public class Menu {
 				System.out.println(Cores.TEXT_WHITE_BOLD + "Apagar a Conta\n\n");
 				System.out.println("Digite o número da conta:");
 				numero = leia.nextInt();
-				
+
 				contas.deletar(numero);
-				
+
 				keyPress();
 				break;
 			case 6:
 				System.out.println(Cores.TEXT_WHITE_BOLD + "Saque\n\n");
+
+				System.out.println("Digite o número da conta:");
+				numero = leia.nextInt();
+
+				do {
+					System.out.println("Digite o valor do saque (R$):");
+					valor = leia.nextFloat();
+				}while (valor <=0);
+
+				contas.sacar(numero, valor);				
 
 				keyPress();
 				break;
 			case 7:
 				System.out.println(Cores.TEXT_WHITE_BOLD + "Depósito\n\n");
 
+				System.out.println("Digite o número da conta:");
+				numero = leia.nextInt();
+
+				do {
+					System.out.println("Digite o valor do depósito (R$)");
+					valor = leia.nextFloat();
+				}while (valor <= 0);
+
+				contas.depositar(numero, valor);				
+
 				keyPress();
 				break;
 			case 8:
 				System.out.println(Cores.TEXT_WHITE_BOLD + "Transferência entre Contas\n\n");
 
+				System.out.println("Digite o número da conta de origem:");
+				numero = leia.nextInt();
+
+				System.out.println("Digite o número da conta de destino:");
+				numeroDestino = leia.nextInt();
+
+				do {
+					System.out.println("Digite o valor da transferência (R$):");
+					valor = leia.nextFloat();
+
+				}while(valor <=0);
+
+				contas.transferir(numero, numeroDestino, valor);
+
 				keyPress();
+
 				break;
 			default:
 				System.out.println(Cores.TEXT_RED_BOLD + "\nOpção Inválida!\n");
